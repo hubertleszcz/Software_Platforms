@@ -1,8 +1,15 @@
 package org.example;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
     private String message;
     private int number;
+
+    public Message(int num, String mess){
+        this.message=mess;
+        this.number=num;
+    }
 
     public String getMessage() {
         return message;

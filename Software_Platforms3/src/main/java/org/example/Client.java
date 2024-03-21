@@ -1,17 +1,31 @@
 package org.example;
-
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.Scanner;
 public class Client {
+    private static int PORT = 50000;
+
+    private static String HOST = "localhost";
+
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        int n = 5; // Przykładowa wartość n
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        try{
+            Socket socket = new Socket(HOST, PORT);
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+            // Wyślij liczbę n
+            out.writeObject(n);
+
+            // Wyślij n obiektów Message
+            for (int i = 0; i < n; i++) {
+                Message message = new Message(i, "Content " + i);
+                  out.writeObject(message);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
