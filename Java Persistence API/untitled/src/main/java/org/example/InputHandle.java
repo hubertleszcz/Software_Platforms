@@ -66,6 +66,49 @@ public class InputHandle {
 
     }
 
+    private void deleteMage(){
+        this.manager.getTransaction().begin();
+        System.out.println("Podaj imie");
+        String name = this.scanner.nextLine();
+        Mage mage = manager.find(Mage.class, name);
+
+        if(mage.getTower() != null) {
+            mage.getTower().deleteMage(mage);
+        }
+        this.manager.remove(mage);
+
+        this.manager.getTransaction().commit();
+    }
+
+    private void deleteTower(){
+        this.manager.getTransaction().begin();
+        System.out.println("Podaj imie");
+        String name = this.scanner.nextLine();
+        Tower tower = manager.find(Tower.class, name);
+
+        for(Mage mage: tower.getMages()){
+            mage.setTower(null);
+        }
+
+        manager.remove(tower);
+
+        this.manager.getTransaction().commit();
+    }
+
+    private void deleteHandler(){
+        System.out.println("1-mag, 2-wieża");
+        int option = Integer.parseInt(this.scanner.nextLine());
+        switch (option){
+            case 1:
+                this.deleteMage();
+                break;
+            case 2:
+                this.deleteTower();
+                break;
+        }
+
+    }
+
     private void printTowers(){
         manager.getTransaction().begin();
         List<Tower> towers = manager.createQuery("Select t FROM Tower t", Tower.class).getResultList();
@@ -115,7 +158,7 @@ public class InputHandle {
                     this.createHandler();
                     break;
                 case 2:
-
+                    this.deleteHandler();
                     break;
                 case 3:
                     this.printHandler();
