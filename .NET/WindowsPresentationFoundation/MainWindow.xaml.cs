@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace WindowsPresentationFoundation
 {
@@ -53,6 +54,44 @@ namespace WindowsPresentationFoundation
                 };
                 contextMenu.Items.Add(delete);
                 var add = new MenuItem { Header = "Add" };
+                add.Click += (sender, args) =>
+                {
+                    var form = new Form { Width = 350, Height = 500 };
+                    var fileName = new System.Windows.Forms.TextBox { Location = new System.Drawing.Point(10, 10), Width = 250 };
+                    form.Controls.Add(fileName);
+                    var groupBox = new System.Windows.Forms.GroupBox { Location = new System.Drawing.Point(15, 45), Width = 200, Height = 100 };
+                    var radioButtonFile = new System.Windows.Forms.RadioButton { Text = "File", Location = new System.Drawing.Point(10, 20) };
+                    var radioButtonFolder = new System.Windows.Forms.RadioButton { Text = "Folder", Location = new System.Drawing.Point(10, 45) };
+                    groupBox.Controls.Add(radioButtonFile);
+                    groupBox.Controls.Add(radioButtonFolder);
+                    form.Controls.Add(groupBox);
+                    var rahsBox = new System.Windows.Forms.GroupBox { Location = new System.Drawing.Point(15, 155), Width = 200, Height = 200 };
+                    var readOnlyBox = new System.Windows.Forms.CheckBox { Text = "ReadOnly", Location = new System.Drawing.Point(10, 20) };
+                    var archiveBox = new System.Windows.Forms.CheckBox { Text = "Archive", Location = new System.Drawing.Point(10, 45) };
+                    var hiddenBox = new System.Windows.Forms.CheckBox { Text = "Hidden", Location = new System.Drawing.Point(10, 70) };
+                    var systemBox = new System.Windows.Forms.CheckBox { Text = "System", Location = new System.Drawing.Point(10, 95) };
+                    rahsBox.Controls.Add(readOnlyBox);
+                    rahsBox.Controls.Add(archiveBox);
+                    rahsBox.Controls.Add(hiddenBox);
+                    rahsBox.Controls.Add(systemBox);
+                    form.Controls.Add(rahsBox);
+
+                    var okButton = new System.Windows.Forms.Button { Text = "OK", Location = new System.Drawing.Point(10, 350), Width = 100 };
+                    okButton.Click += (sender, args) =>
+                    {
+                    };
+                    form.Controls.Add(okButton);
+
+                    var cancelButton = new System.Windows.Forms.Button { Text = "Cancel", Location = new System.Drawing.Point(120, 350), Width = 100 };
+                    cancelButton.Click += (sender, args) =>
+                    {
+                        form.Close();
+                    };
+                    form.Controls.Add(cancelButton);
+
+                    form.ShowDialog();
+                };
+
                 contextMenu.Items.Add(add);
                 item.ContextMenu = contextMenu;
                 parentNode.Items.Add(item);
@@ -83,6 +122,13 @@ namespace WindowsPresentationFoundation
                     }
                 };
                 contextMenu.Items.Add(delete);
+                var openFile = new MenuItem { Header = "Open" };
+                openFile.Click += (sender, args) =>
+                {
+                    var reader = file.OpenText();
+                    fileContent.Text = reader.ReadToEnd();
+                };
+                contextMenu.Items.Add(openFile);
                 item.ContextMenu = contextMenu;
 
                 parentNode.Items.Add(item);

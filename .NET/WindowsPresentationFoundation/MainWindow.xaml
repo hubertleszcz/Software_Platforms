@@ -12,7 +12,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -23,8 +23,10 @@
             </MenuItem>
         </Menu>
 
-        <TreeView x:Name="treeView" Grid.Row="1" Grid.Column="1"/>
-        <TextBlock x:Name="fileContent" Grid.Row="1" Grid.Column="2"/>
+        <TreeView x:Name="treeView" Grid.Row="1" Grid.Column="0"/>
+        <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <TextBlock x:Name="fileContent" />
+        </ScrollViewer>
     </Grid>
 
 </Window>
